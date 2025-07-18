@@ -20,3 +20,19 @@ def dataprocessing(trainingdata, schema, labels):
         output.append([user_id] + features + [label])
 
     return output
+#test
+trainingdata = [
+    {'user_id': '123', 'age': 25, 'gender': 'F'},
+    {'user_id': '234', 'age': 30, 'gender': 'M'},
+]
+
+schema = [{'name': 'age'}, {'name': 'gender'}]
+
+labels = {'123': True, '234': False}
+
+print(dataprocessing(trainingdata, schema, labels))
+# Output:
+# [
+#   ['123', 25, 'F', True],
+#   ['234', 30, 'M', False]
+# ]
