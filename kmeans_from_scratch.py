@@ -16,7 +16,7 @@ class Kmeans():
       labels = np.argmin(dist,axis=1)
       new_c = np.array([x[labels==j].mean(axis=0) if np.any (x[labels==j] )else self.centroids[j] for j in range(self.k)])
       diff = np.linalg.norm(new_c-self.centroids)
-      if diff<self.tol:
+      if diff<self.tol: #如果新的中心点（new_c）和旧的中心点（self.centroids）之间的整体移动距离已经很小（小于某个容忍阈值 tol），就可以提前停止迭代，不再继续运行 self.iter 次了
         break
       self.centroids = new_c
     self.labels=labels
