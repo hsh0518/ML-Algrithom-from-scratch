@@ -7,6 +7,14 @@ def cost(x,y,theta,lambda_):
   cost = -1/m *(y.T@np.log(h) +(1-y).T@(np.log(1-h)))
   cost+= (lambda_/(2*m))  * np.sum( theta[1:]**2)
   return cost
+  
+from sklearn.model_selection import train_test_split
+
+# 在调用 gradient descent 之前做一次划分
+X_train_full, X_val, y_train_full, y_val = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
 def gd(X_train, y_train, X_val, y_val, theta, lambda_, lr, max_iters, patience):
     best_theta = theta.copy()
     best_val_loss = float('inf')
