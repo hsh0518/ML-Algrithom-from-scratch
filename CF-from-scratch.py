@@ -49,7 +49,7 @@ class Recommender:
                     scores[item] += sim * rating
                     similarity_sums[item] += sim
 
-        # Normalize
+        # Normalize by sim: if a lot of low sim user giving high score to a item, this item might have high score, this'll smooth it out
         ranked = [(item, score / similarity_sums[item]) for item, score in scores.items() if similarity_sums[item] > 0]
         ranked.sort(key=lambda x: -x[1])
         return [item for item, _ in ranked[:k]]
