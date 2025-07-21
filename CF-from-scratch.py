@@ -53,3 +53,14 @@ class Recommender:
         ranked = [(item, score / similarity_sums[item]) for item, score in scores.items() if similarity_sums[item] > 0]
         ranked.sort(key=lambda x: -x[1])
         return [item for item, _ in ranked[:k]]
+
+def recall_at_k(model, test_set, k=10):
+    hit = 0
+    total = 0
+    for user_id, true_item in test_set:
+        rec_items = model.recommend(user_id, topk=k)
+        if true_item in rec_items:
+            hit += 1
+        total += 1
+    return hit / total if total > 0 else 0.0
+
