@@ -20,7 +20,7 @@ class mh(nn.Module):
         B,T,D = x.shape
         qkv = self.qkv_project(x)
         qkv = qkv.reshape(B,T,3,self.head,self.head_d)
-        qkv = qkv.premute(2,0,3,1,4) #3BHThd
+        qkv = qkv.permute(2,0,3,1,4) #3BHThd
         Q,K,V = qkv[0],qkv[1],qkv[2]
 
         score = Q@K.transpose(-1,-2)/self.head_d**0.5 #BHTT
@@ -28,6 +28,7 @@ class mh(nn.Module):
         attn_w = f.softmax(score)
         context = attn_w@V#BHThd
         context = context().transpose(2,1).reshape(B,T,self.hidden_d)
+        context = self.out_proj(context)
         return context,x
 class forwordfeedn(nn.Module):
     def __init__(self,d, dropout):
