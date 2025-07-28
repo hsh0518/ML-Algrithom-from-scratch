@@ -58,9 +58,12 @@ class residule_layer(nn.Module):
 
 text = 'xxxx'
 tokenizer = AutoTokenizer()
-enc = tokenizer(text,return_tokenid = 'pt',padding=True)
-inputtokenid = enc[:,:-1]
-target = enc[:,1:]
+enc = tokenizer(text,return_tokenid = 'pt',padding=True) #pt is the torch tensor format. also can be np, tf  --array, tensorflow tensor
+, tf
+token = enc['input_ids'] #enc is a dictionary.
+attention_mask = enc['attention_mask']
+inputtokenid = token[:,:-1] #2 dim [batchsize, tokenids]
+target = token[:,1:]
 
 mhfn = mh('bert',8,freeze=True)
 ffn = forwordfeedn(768,0.1)
